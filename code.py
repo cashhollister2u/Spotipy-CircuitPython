@@ -1,6 +1,3 @@
-# adafruit
-from adafruit_matrixportal.matrix import Matrix
-
 # conventional libraries
 from os import getenv
 import time
@@ -34,4 +31,3 @@ while IS_SPOTIFY == 1:
     #spotify_player(skip_to_previous, GLOBAL_ACCESS_TOKEN)
 
     time.sleep(5) #FOR THE WHILE LOOP OPTION
-
