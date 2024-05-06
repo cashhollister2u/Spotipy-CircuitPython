@@ -5,27 +5,6 @@ import adafruit_connection_manager
 import adafruit_requests
 from adafruit_esp32spi import adafruit_esp32spi
 
-# conventional 
-from os import getenv
-
-# ---------------------------------- user inputs ----------------------------------
-
-# stocks
-STOCK = getenv("STOCK")
-TWELVE_API_KEY = getenv("TWELVE_API_KEY")
-
-# time
-TIME_ZONE = getenv("TIME_ZONE")
-COUNTRY = getenv("COUNTRY")
-IS_CLOCK = getenv("IS_CLOCK")
-
-
-
-
-# ---------------------------------------------------------------------------------
-
-# ---------------------------------- wifi connect ---------------------------------
-
 # Get wifi details and more from a settings.toml file
 # tokens used by this Demo: CIRCUITPY_WIFI_SSID, CIRCUITPY_WIFI_PASSWORD
 secrets = {
@@ -81,72 +60,6 @@ print(
     "IP lookup adafruit.com: %s" % esp.pretty_ip(esp.get_host_by_name("adafruit.com"))
 )
 
-# ---------------------------------------------------------------------------------
-
-
-# ---------------------------------- API Calls ----------------------------------
-
-#collects financial data from twelve data api
-
-def getStockInstance(): 
-    STOCK_URL = f"https://api.twelvedata.com/quote?symbol={STOCK}&apikey={TWELVE_API_KEY}"
-
-    try:
-        print("Loading...")
-        with requests.get(STOCK_URL) as response:
-            print("---Done---")
-            return response.json()
-    
-    except Exception as e:
-        print("Error instance stock data :", e)
-
-def getStockDataGraph(output_size): 
-    STOCK_URL = f"https://api.twelvedata.com/time_series?symbol={STOCK}&interval=5min&outputsize={output_size}&apikey={TWELVE_API_KEY}"
-
-    try:
-        print("Loading...")
-        with requests.get(STOCK_URL) as response:
-            print("---Done---")
-            return response.json()
-    
-    except Exception as e:
-        print("Error stock graph data:", e)
-
-#returns current time on start-up
-def sync_time():
-    TIME_ZONE_URL = f"http://worldtimeapi.org/api/timezone/{COUNTRY}/{TIME_ZONE}"
-    if IS_CLOCK == 1:
-        try:
-            #get the current time data
-            with requests.get(TIME_ZONE_URL) as response:
-                response_json = response.json()  # Parse as JSON
-                # Extract the ISO datetime string
-                datetime_str = response_json["datetime"]
-
-                # Split date and time components
-                date_part, time_part = datetime_str.split("T")
-                year, month, day = map(int, date_part.split("-"))
-                day_of_week = response_json['day_of_week']
-
-                # Further split and parse time components
-                time_parts = time_part.split(":")
-                hour, minute, second = map(lambda x: int(x.split(".")[0]), time_parts[0:3])
-                time_JSON = {
-                    'year':year,
-                    'month':month,
-                    'day':day,
-                    'hour':hour,
-                    'minute':minute,
-                    'second':second,
-                    'day_of_week': day_of_week
-                }
-                print(time_JSON)
-                return time_JSON
-        
-        except Exception as e:
-            print("Error:", e)
-            return "Time Error"
 
 
 
-# ---------------------------------------------------------------------------------
