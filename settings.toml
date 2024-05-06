@@ -10,7 +10,8 @@ ADAFRUIT_IO_KEY = "API KEY"
     # spotify
 CLIENT_ID = "CLIENT_ID FROM SPOTIFY DEV ACCOUNT"
 CLIENT_SECRET = "CLIENT_SECRET FROM SPOTIFY DEV ACCOUNT"
-REFRESH_TOKEN = "REFRESH TOKEN FROUND IN TERMINAL OUTPUT ON INITIAL RUN"
+#refresh is commened out to trigger the authorization process. After you paste the refresh token recieved comment it back in 
+#REFRESH_TOKEN = "REFRESH TOKEN FROUND IN TERMINAL OUTPUT ON INITIAL RUN"
 
 ACCESS_TOKEN = "" # **optional** new access token is gabbed each session 
 VOLUME = 75
